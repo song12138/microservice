@@ -1,0 +1,18 @@
+version: '2'
+services:
+    microservice-app:
+        image: microservice
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://microservice-mysql:3306/microservice?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_CACHE_MEMCACHED_SERVERS=microservice-memcached:11211
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+    microservice-mysql:
+        extends:
+            file: mysql.yml
+            service: microservice-mysql
+    microservice-memcached:
+        extends:
+            file: memcached.yml
+            service: microservice-memcached
